@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TodoMapper">
+
+<!-- 全表示 -->
+<select id="showAll" resultType="com.example.demo.entity.Todo">
+	SELECT * FROM mytodo WHERE delete_date IS NULL
+</select>
+
+<!-- 未完了（フラグがFALSE）のものだけ表示 -->
+<select id="showIncomplete" resultType="com.example.demo.entity.Todo">
+	SELECT * FROM mytodo WHERE complete_flag = false
+</select>
+
+<!-- 未完了（フラグがFALSE）のものだけ表示 -->
+<select id="showComplete" resultType="com.example.demo.entity.Todo">
+	SELECT * FROM mytodo WHERE complete_flag = true
+</select>
+
+<!-- 新規登録 -->
+<!-- AddRequestに入れたパラメータだけ持ってこれる？ -->
+<insert id="save">
+	INSERT INTO mytodo
+		(item, priority, user_id, deadline, create_date, update_date)
+	VALUES
+		(#{item}, #{priority}, #{userId}, #{deadline}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+</insert>
+
+<!-- 条件指定検索 -->
+<select id="search" resultType="com.example.demo.entity.Todo">
+	SELECT
+	*
+	FROM
+	mytodo
+	WHERE
+	delete_date IS NULL
+	<if test="item != null and item !=''">
+		AND item LIKE CONCAT('%', #{item}, '%')
+	</if>
+	<if test="userId != null and userId !=''">
+<!-- 	要注意！！ifの中のパラメータ名はSQLの中のものではなく、Javaのフィールド -->
+		AND user_id = #{userId}
+	</if>
+</select>
+
+<!-- Todo IDで検索 -->
+<select id="findById" resultType="com.example.demo.entity.Todo">
+	SELECT * FROM mytodo WHERE todo_id = #{todoId} AND delete_date IS NULL
+</select>
+
+<!-- 更新 -->
+<update id ="update">
+	UPDATE
+	mytodo
+	SET
+	item = #{item}
+	,priority = #{priority}
+	,user_id = #{userId}
+	,deadline = #{deadline}
+</update>
+
+
+
+</mapper>

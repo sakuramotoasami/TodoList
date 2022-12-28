@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Todo新規登録</title>
+</head>
+
+<body>
+	<div class="add-whole">
+	
+		<div th:if="${validationError}" th:each="error: ${validationError}">
+			<label class="text-error" th:text="${error}"></label>
+		</div>
+	
+	<h1>Todo新規登録</h1>
+	
+	<form th:action="@{/todo/create}" th:object="${todoAddRequest}" th:method="post">
+		<div class="input-item-question">
+			<label>やること：</label>
+			<input type="text" th:field="*{item}" class="input-item-answer">
+		</div>
+		<div class="input-item-question">
+			<label>優先度：</label>
+			<input type="radio" th:field="*{priority}" value="高" class="input-item-answer"/>
+				<label th:for="${#ids.prev('priority')}" th:text="高"></label>
+				<input type="radio" th:field="*{priority}" value="中" class="input-item-answer"/>
+				<label th:for="${#ids.prev('priority')}" th:text="中"></label>
+				<input type="radio" th:field="*{priority}" value="低" class="input-item-answer"/>
+				<label th:for="${#ids.prev('priority')}" th:text="低"></label>
+		</div>
+		<div class="input-item-question">
+			<label>ユーザーID：</label>
+			<input type="text" th:field="*{userId}" class="input-item-answer">
+		</div>
+		<div class="input-item-question">
+			<label>期限：</label>
+			<input type="date" th:field="*{deadline}" class="input-item-answer">
+		</div>
+		
+		<div class="input-button">
+			<input type="submit" value="登録" class="btn-add">
+			<a href="/todo/search" class="btn-back">戻る</a>
+		</div>
+	</form>
+	</div>
+</body>
+</html>
