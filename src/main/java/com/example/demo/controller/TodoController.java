@@ -27,13 +27,13 @@ public class TodoController {
 	@Autowired
 	private TodoService todoService;
 	
-	@GetMapping(value="/todo/search")
+	@GetMapping(value="/todo/list")
 	public String displayList(Model model) {
 //		List<Todo> list = todoService.showAll();
-		List<Todo> incompletetodos = todoService.showIncomplete();
+		List<Todo> todoList = todoService.showIncomplete();
 //		List<Todo> completelist = todoService.showComplete();
 //		model.addAttribute("todos", list);
-		model.addAttribute("incompletetodos", incompletetodos);
+		model.addAttribute("todolist", todoList);
 //		model.addAttribute("completetodos", completelist);
 		model.addAttribute("todoSearchRequest", new TodoSearchRequest());
 		return "todo/search";
@@ -50,9 +50,7 @@ public class TodoController {
 	//条件指定検索
 	@RequestMapping(value="/todo/search", method = RequestMethod.POST)
 	public String search(@ModelAttribute TodoSearchRequest todoSearchRequest, Model model) {
-		List<Todo> incompletetodos = todoService.showIncomplete();
 		List<Todo> todoList = todoService.search(todoSearchRequest);
-		model.addAttribute("incompletetodos", incompletetodos);
 		model.addAttribute("todolist", todoList);
 		return "todo/search";
 		
@@ -70,7 +68,7 @@ public class TodoController {
 			return "todo/add";
 		}
 		todoService.save(todoAddRequest);
-		return "redirect:/todo";
+		return "redirect:/todo/list";
 	}
 	
 	//編集画面
@@ -83,6 +81,7 @@ public class TodoController {
 		todoUpdateRequest.setPriority(todo.getPriority());
 		todoUpdateRequest.setUserId(todo.getUserId());
 		todoUpdateRequest.setDeadline(todo.getDeadline());
+		todoUpdateRequest.setCompleteFlag(todo.getCompleteFlag());
 		model.addAttribute("todoUpdateRequest", todoUpdateRequest);
 		return "todo/edit";
 	}
@@ -99,7 +98,21 @@ public class TodoController {
 			return "todo/edit";
 		}
 		todoService.update(todoUpdateRequest);
-		return "redirect:/todo/search";
+		return "redirect:/todo/list";
+	}
+	
+	//削除
+	@GetMapping("/todo/{todoId}/delete") 
+	public String delete(@PathVariable Long todoId, Model model) {
+		todoService.delete(todoId);
+		return "redirect:/todo/list";		
+	}
+	
+	//完了にする
+	@GetMapping("/todo/{todoId}/changeToComplete") 
+	public String changeToComplete(@PathVariable Long todoId, Model model) {
+		todoService.changeToComplete(todoId);
+		return "redirect:/todo/list";		
 	}
 	
 

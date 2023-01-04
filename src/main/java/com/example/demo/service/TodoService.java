@@ -52,5 +52,15 @@ public class TodoService {
 	public void update(TodoUpdateRequest todoUpdateRequest) {
 		todoMapper.update(todoUpdateRequest);
 	}
+	
+	//削除
+	public void delete(Long todoId) {
+		todoMapper.delete(todoId);
+	}
+	
+	//完了にする
+	public void changeToComplete(Long todoId) {
+		todoMapper.changeToComplete(todoId);
+	}
 
 }

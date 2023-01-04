@@ -7,11 +7,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class TodoUpdateRequest extends TodoAddRequest implements Serializable {
-	
+@EqualsAndHashCode(callSuper=false)
+public class TodoDeleteRequest extends TodoAddRequest implements Serializable {
+
 	@NotNull
 	private Long todoId;
-	
-	private String completeFlag;
 }

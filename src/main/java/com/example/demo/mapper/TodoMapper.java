@@ -34,5 +34,9 @@ public interface TodoMapper {
 	void update(TodoUpdateRequest todoUpdateRequest);
 	
 	//削除
+	void delete(Long todoId);
+	
+	//完了にする
+	void changeToComplete(Long todoId);
 
 }
