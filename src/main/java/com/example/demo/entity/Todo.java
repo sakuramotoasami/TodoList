@@ -13,7 +13,7 @@ public class Todo implements Serializable{
 	
 	private String item;
 	
-	private String completeFlag;
+	private boolean completeFlag;
 	
 	private String priority;
 	

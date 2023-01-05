@@ -81,7 +81,7 @@ public class TodoController {
 		todoUpdateRequest.setPriority(todo.getPriority());
 		todoUpdateRequest.setUserId(todo.getUserId());
 		todoUpdateRequest.setDeadline(todo.getDeadline());
-		todoUpdateRequest.setCompleteFlag(todo.getCompleteFlag());
+		todoUpdateRequest.setCompleteFlag(todo.isCompleteFlag());
 		model.addAttribute("todoUpdateRequest", todoUpdateRequest);
 		return "todo/edit";
 	}

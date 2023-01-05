@@ -11,12 +11,12 @@
 
 <!-- 未完了（フラグがNULL）のものだけ表示 -->
 <select id="showIncomplete" resultType="com.example.demo.entity.Todo">
-	SELECT * FROM mytodo WHERE delete_date IS NULL AND complete_flag = "0"
+	SELECT * FROM mytodo WHERE delete_date IS NULL AND complete_flag = FALSE
 </select>
 
 <!-- 完了だけ表示 -->
 <select id="showComplete" resultType="com.example.demo.entity.Todo">
-	SELECT * FROM mytodo WHERE delete_date IS NULL AND complete_flag = "1"
+	SELECT * FROM mytodo WHERE delete_date IS NULL AND complete_flag = TRUE
 </select>
 
 <!-- 新規登録 -->
@@ -46,7 +46,7 @@
 	<if test="priority != null and priority !=''">
 		AND priority = #{priority}
 	</if>
-	<if test="completeFlag != null and completeFlag !=''">
+	<if test="completeFlag != null">
 		AND complete_flag = #{completeFlag}
 	</if>
 	<if test="deadline != null">
@@ -55,7 +55,7 @@
 	
 </select>
 
-<!-- 	要注意！！ifの中のパラメータ名はSQLの中のものではなく、Javaのフィールド -->
+<!-- 	要注意！！ifの中のパラメータ名はSQLの中のものではなく、Javaのフィールド  and completeFlag !=''-->
 
 <!-- Todo IDで検索 -->
 <select id="findById" resultType="com.example.demo.entity.Todo">
@@ -69,7 +69,6 @@
 	SET
 	item = #{item}
 	,priority = #{priority}
-	,complete_flag = #{completeFlag}
 	,user_id = #{userId}
 	,deadline = #{deadline}
 	,update_date = CURRENT_TIMESTAMP
@@ -88,7 +87,7 @@
 <update id = "changeToComplete">
 	UPDATE
 	mytodo
-	SET complete_flag = 1, update_date = CURRENT_TIMESTAMP, complete_date = CURRENT_TIMESTAMP WHERE todo_id = #{todoId}
+	SET complete_flag = TRUE, update_date = CURRENT_TIMESTAMP, complete_date = CURRENT_TIMESTAMP WHERE todo_id = #{todoId}
 </update>
 
 </mapper>

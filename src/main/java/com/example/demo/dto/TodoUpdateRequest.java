@@ -13,5 +13,5 @@ public class TodoUpdateRequest extends TodoAddRequest implements Serializable {
 	@NotNull
 	private Long todoId;
 	
-	private String completeFlag;
+	private boolean completeFlag;
 }

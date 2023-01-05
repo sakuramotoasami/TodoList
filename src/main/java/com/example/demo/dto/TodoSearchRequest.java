@@ -16,7 +16,7 @@ public class TodoSearchRequest implements Serializable {
 	
 	private String priority;
 	
-	private String completeFlag;
+	private boolean completeFlag;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deadline;
